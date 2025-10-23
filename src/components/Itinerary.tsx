@@ -159,7 +159,7 @@ const itineraryData = [
       { time: "13:00", activity: "前往 关西机场", note: "" },
       { time: "14:30", activity: "入住 关西机场温泉酒店", note: "" },
       { time: "15:00", activity: "Rinku Premium Outlet 自由活动", note: "自费" },
-      { time: "18:00", activity: "闭营晚餐 + 分享感悟", note: "人数不多，找个附近的餐厅提前预约就行" },
+      { time: "18:00", activity: "闭营晚餐 + 分享感悟", note: "" },
       { time: "21:00", activity: "温泉", note: "自费" },
       { time: "22:00", activity: "入住 关西机场温泉酒店", note: "" }
     ],
