@@ -24,10 +24,10 @@ const Hero = () => {
 
           {/* Main Title */}
           <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight">
+            <h1 className="text-4xl md:text-7xl font-bold text-white leading-tight whitespace-nowrap">
               稻盛之道·经营哲学
             </h1>
-            <h2 className="text-3xl md:text-4xl font-semibold text-white/90">
+            <h2 className="text-2xl md:text-4xl font-semibold text-white/90">
               MAG Holdings Berhad 日本商务研修团
             </h2>
           </div>
