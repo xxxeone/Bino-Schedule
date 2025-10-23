@@ -26,9 +26,13 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
 
-    // 每条消息显示1.8秒后切换到下一条
+    // 自定义每条消息的显示时间
+    const messageDurations = [1800, 3500, 1800, 1800, 1800]; // 第二屏显示3.5秒
+    let cumulativeTime = 0;
+
     messages.forEach((_, index) => {
       if (index < messages.length) {
+        cumulativeTime += messageDurations[index];
         const timer = setTimeout(() => {
           if (index < messages.length - 1) {
             setCurrentMessage(index + 1);
@@ -36,15 +40,16 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
             // 最后一条消息显示后开始退出
             setIsExiting(true);
           }
-        }, (index + 1) * 1800);
+        }, cumulativeTime);
         timers.push(timer);
       }
     });
 
     // 退出动画完成后调用onComplete
+    const totalTime = messageDurations.reduce((sum, dur) => sum + dur, 0);
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, messages.length * 1800 + 800);
+    }, totalTime + 800);
     timers.push(completeTimer);
 
     return () => timers.forEach(timer => clearTimeout(timer));
@@ -57,15 +62,16 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
       return (
         <div className="animate-zoom-in">
           <div className="text-white text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-8 md:mb-12">
-            欢迎各位贵宾
+            热烈欢迎🔥！
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 px-4">
             {teamMembers.map((name, index) => (
               <div
                 key={name}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 text-white text-xl sm:text-2xl md:text-3xl font-semibold text-center border border-white/20 shadow-lg hover:bg-white/20 transition-all"
+                className="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 text-white text-xl sm:text-2xl md:text-3xl font-semibold text-center border border-white/20 shadow-lg hover:bg-white/20 transition-all hover:scale-105 animate-float"
                 style={{ 
-                  animation: `zoom-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.1}s both`
+                  animation: `slide-up 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 0.15}s both, float 3s ease-in-out ${index * 0.2}s infinite`,
+                  animationDelay: `${index * 0.15}s, ${index * 0.2 + 0.8}s`
                 }}
               >
                 {name}
