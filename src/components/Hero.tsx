@@ -11,7 +11,7 @@ const Hero = () => {
           alt="日本商务研修之旅" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-600/90 via-amber-500/85 to-red-600/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-secondary/85 to-primary-dark/90" />
       </div>
 
       {/* Content */}

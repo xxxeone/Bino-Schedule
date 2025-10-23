@@ -52,6 +52,7 @@ const Index = () => {
         className={`transition-all duration-1000 ${
           visibleSections.has("hero") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
+        style={{ opacity: visibleSections.size === 0 ? 1 : undefined }}
       >
         <Hero />
       </div>
@@ -61,6 +62,7 @@ const Index = () => {
         className={`transition-all duration-1000 delay-150 ${
           visibleSections.has("itinerary") ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"
         }`}
+        style={{ opacity: visibleSections.size === 0 ? 1 : undefined }}
       >
         <Itinerary />
       </div>
@@ -70,6 +72,7 @@ const Index = () => {
         className={`transition-all duration-1000 delay-300 ${
           visibleSections.has("objectives") ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"
         }`}
+        style={{ opacity: visibleSections.size === 0 ? 1 : undefined }}
       >
         <Objectives />
       </div>
@@ -79,6 +82,7 @@ const Index = () => {
         className={`transition-all duration-1000 delay-450 ${
           visibleSections.has("footer") ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
+        style={{ opacity: visibleSections.size === 0 ? 1 : undefined }}
       >
         <Footer />
       </div>
