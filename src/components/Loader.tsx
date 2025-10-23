@@ -22,20 +22,31 @@ const teamMembers = [
 const Loader = ({ onComplete }: { onComplete: () => void }) => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const timers: NodeJS.Timeout[] = [];
 
     // 自定义每条消息的显示时间
-    const messageDurations = [1800, 3500, 1800, 1800, 1800]; // 第二屏显示3.5秒
+    const messageDurations = [1800, 5000, 1800, 1800, 1800]; // 第二屏显示5秒
     let cumulativeTime = 0;
 
     messages.forEach((_, index) => {
       if (index < messages.length) {
         cumulativeTime += messageDurations[index];
+        
+        // 在切换前300ms开始淡出
+        if (index < messages.length - 1) {
+          const fadeOutTimer = setTimeout(() => {
+            setIsTransitioning(true);
+          }, cumulativeTime - 300);
+          timers.push(fadeOutTimer);
+        }
+        
         const timer = setTimeout(() => {
           if (index < messages.length - 1) {
             setCurrentMessage(index + 1);
+            setIsTransitioning(false);
           } else {
             // 最后一条消息显示后开始退出
             setIsExiting(true);
@@ -95,8 +106,8 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Logo - Larger */}
-      <div className="mb-16 md:mb-20 animate-fade-in">
+      {/* Logo - Fixed position with smooth transition */}
+      <div className="mb-8 md:mb-12 transition-all duration-700 ease-in-out">
         <img 
           src={binoLogo} 
           alt="Bino EduTour" 
@@ -104,15 +115,20 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
         />
       </div>
 
-      {/* Message Display */}
-      <div className="flex items-center justify-center min-h-[140px] sm:min-h-[180px] md:min-h-[280px] w-full max-w-6xl">
-        <div key={currentMessage} className="w-full">
+      {/* Message Display - Fixed height container */}
+      <div className="flex items-center justify-center w-full max-w-6xl" style={{ minHeight: '320px' }}>
+        <div 
+          key={currentMessage} 
+          className={`w-full transition-opacity duration-300 ${
+            isTransitioning ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
           {renderMessage()}
         </div>
       </div>
 
-      {/* Loading dots */}
-      <div className="mt-16 md:mt-20 flex gap-3">
+      {/* Loading dots - Fixed position */}
+      <div className="mt-8 md:mt-12 flex gap-3 transition-all duration-700">
         {[0, 1, 2].map((i) => (
           <div
             key={i}
