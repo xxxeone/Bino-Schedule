@@ -5,12 +5,12 @@ const itineraryData = [
     location: "吉隆坡 → 大阪",
     items: [
       { time: "23:00", activity: "集合 吉隆坡国际机场", note: "" },
-      { time: "02:10 +1", activity: "登机", note: "参考航班：AAX D7532" }
+      { time: "02:10 +1", activity: "登机", note: "航班：AAX D7532" }
     ],
     accommodation: null,
     accommodationAddress: null,
     meals: null,
-    notes: "参考航班：AAX D7532 - 02:10 - 09:35 [6hrs 25mins direct]",
+    notes: "航班：AAX D7532 - 02:10 - 09:35 [6hrs 25mins direct]",
     scheduleChange: false
   },
   {
@@ -180,12 +180,33 @@ const itineraryData = [
     accommodation: null,
     accommodationAddress: null,
     meals: "酒店早餐",
-    notes: "参考航班：AAX D7533 - 10:50 - 17:15 [7hrs 25mins direct]",
+    notes: "航班：AAX D7533 - 10:50 - 17:15 [7hrs 25mins direct]",
     scheduleChange: false
   }
 ];
 
 const Itinerary = () => {
+  // Function to highlight flight codes
+  const highlightFlightCode = (text: string) => {
+    // Match pattern like "AAX D7532" or "AAX D7533"
+    const flightCodePattern = /(AAX D\d+)/g;
+    const parts = text.split(flightCodePattern);
+    
+    return parts.map((part, index) => {
+      if (part.match(flightCodePattern)) {
+        return (
+          <span 
+            key={index} 
+            className="inline-block bg-accent/20 text-accent font-semibold px-2 py-0.5 rounded mx-1 border border-accent/30"
+          >
+            {part}
+          </span>
+        );
+      }
+      return part;
+    });
+  };
+
   return (
     <section className="py-24 bg-gradient-to-b from-muted/30 to-background">
       <div className="container mx-auto px-6">
@@ -253,7 +274,7 @@ const Itinerary = () => {
                         <p className="font-medium text-foreground mb-1">{item.activity}</p>
                         {item.note && (
                           <div className="text-sm text-muted-foreground whitespace-pre-line pl-4 border-l-2 border-primary/30 mt-2">
-                            {item.note}
+                            {highlightFlightCode(item.note)}
                           </div>
                         )}
                       </div>
@@ -290,7 +311,7 @@ const Itinerary = () => {
                 {day.notes && (
                   <div className="mt-4 pt-4 border-t">
                     <p className="text-sm text-muted-foreground italic">
-                      {day.notes}
+                      {highlightFlightCode(day.notes)}
                     </p>
                   </div>
                 )}
