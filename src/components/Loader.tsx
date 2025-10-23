@@ -41,7 +41,7 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
 
   return (
     <div 
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-primary/95 via-secondary/90 to-primary-dark/95 transition-opacity duration-700 px-4 ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-orange-600/95 via-amber-500/90 to-red-600/95 transition-opacity duration-700 px-4 ${
         isExiting ? 'opacity-0' : 'opacity-100'
       }`}
     >
